@@ -23,37 +23,17 @@
   }
   $: emailVerified = $user?.emailVerified
 
-  let pages
-  $: if (applicationType === 'apply') {
-    pages = [
+  let pages = [
       {
         name: 'Dashboard',
         href: '/dashboard'
       },
       {
-        name: 'Apply',
-        href: '/apply'
+        name: 'Data',
+        href: '/data'
       }
     ]
-  } else if (applicationType === 'register') {
-    pages = [
-      {
-        name: 'Dashboard',
-        href: '/dashboard'
-      },
-      {
-        name: 'Register',
-        href: '/register'
-      }
-    ]
-  } else {
-    pages = [
-      {
-        name: 'Dashboard',
-        href: '/dashboard'
-      }
-    ]
-  }
+  
 
   function updateShadow() {
     shadow = window.pageYOffset !== 0

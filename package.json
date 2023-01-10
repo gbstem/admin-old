@@ -30,6 +30,7 @@
     "firebase": "^9.15.0",
     "handlebars": "^4.7.7",
     "lodash-es": "^4.17.21",
-    "nanoid": "^4.0.0"
+    "nanoid": "^4.0.0",
+    "papaparse": "^5.3.2"
   }
 }

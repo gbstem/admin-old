@@ -13,7 +13,6 @@
       getDoc(doc($db, 'applications', $user.uid)).then(res => {
         if (res.exists()) {
           const application = res.data()
-          console.log(application)
           if (application.accepted) {
             data.application =
               'You have been accepted to gbSTEM 2023! We look forward to seeing you.'
