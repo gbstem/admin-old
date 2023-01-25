@@ -21,7 +21,8 @@
         instructor2Uid,
         instructor2Name,
         studentUid,
-        studentName
+        studentName,
+        course
       } = student
       // get the class document
       const classDoc = doc(db, 'classes', classId)
@@ -33,6 +34,7 @@
       // update the class document with the student and instructor
       if (instructor2Uid && instructor2Uid !== '') {
         updateDoc(classDoc, {
+          course,
           students: {
             [studentUid]: {
               name: studentName
@@ -49,6 +51,7 @@
         })
       } else {
         updateDoc(classDoc, {
+          course,
           students: {
             [studentUid]: {
               name: studentName
@@ -107,7 +110,7 @@
       engineeringCourse: program.engineeringCourse.value,
       scienceCourse: program.scienceCourse.value,
       timeSlots: program.timeSlots.value.join(';'),
-      inPerson: program.inPerson.value,
+      inPerson: program.inPerson.checked,
       id: meta.id.value,
       uid: meta.uid.value
     }
