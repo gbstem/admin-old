@@ -136,7 +136,7 @@
       numClasses: program.numClasses.value,
       courses: program.courses.value.join(';'),
       timeSlots: program.timeSlots.value.join(';'),
-      inPerson: program.inPerson.value,
+      inPerson: program.inPerson.checked,
       academicBackground: essay.academicBackground.value,
       teachingScenario: essay.teachingScenario.value,
       why: essay.why.value,
