@@ -134,6 +134,7 @@
       reason: program.reason.value,
       preferences: program.preferences.value,
       numClasses: program.numClasses.value,
+      notAvailable: program.notAvailable.value,
       courses: program.courses.value.join(';'),
       timeSlots: program.timeSlots.value.join(';'),
       inPerson: program.inPerson.checked,
@@ -154,6 +155,7 @@
         allRegistrations.push(formatRegistration(registration))
       }
       if (registration.meta.uid.value !== doc.id) {
+        console.log(registration.meta.uid.value, doc.id)
         alert.trigger(
           'error',
           'Registration UID mismatch. Please contact Yuen Ler before proceeding.',
