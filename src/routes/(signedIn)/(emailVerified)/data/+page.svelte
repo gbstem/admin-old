@@ -165,10 +165,14 @@
     })
 
     const applicationSnapshot = await getDocs(collection($db, 'applications'))
+    let out = ''
+
     applicationSnapshot.forEach(doc => {
       const application = serialize.fromServer(doc.data())
-      if (true || application.meta.submitted.checked) {
+      if (application.meta.submitted.checked) {
         allApplications.push(formatApplication(application))
+      } else {
+        out += application.personal.email.value + '; '
       }
       if (application.meta.uid.value !== doc.id) {
         alert.trigger(
@@ -178,6 +182,7 @@
         )
       }
     })
+    console.log(out)
 
     ready = true
   })
