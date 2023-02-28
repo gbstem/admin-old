@@ -167,7 +167,7 @@
     const applicationSnapshot = await getDocs(collection($db, 'applications'))
     applicationSnapshot.forEach(doc => {
       const application = serialize.fromServer(doc.data())
-      if (application.meta.submitted.checked) {
+      if (true || application.meta.submitted.checked) {
         allApplications.push(formatApplication(application))
       }
       if (application.meta.uid.value !== doc.id) {
