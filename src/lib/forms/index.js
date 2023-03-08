@@ -68,7 +68,9 @@ export const serialize = {
             field['value'] = {}
             break
         }
-        fields[section][fieldName] = field
+        if (section !== 'classId') {
+          fields[section][fieldName] = field
+        }
       })
     })
     return fields

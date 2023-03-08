@@ -1,6 +1,6 @@
 <script>
   import { classNames } from '$lib/utils'
-  import { doc, getDocs, collection, updateDoc } from 'firebase/firestore'
+  import { doc, getDocs, collection, updateDoc, setDoc } from 'firebase/firestore'
   import { db } from '$lib/firebase'
   import { serialize } from '$lib/forms'
   import { alert } from '$lib/stores'
@@ -12,69 +12,8 @@
   let ready = false
 
   async function storeClasses(classes) {
-    for (let i = 0; i < classes.length; i++) {
-      const student = classes[i]
-      const {
-        classId,
-        instructorUid,
-        instructorName,
-        instructor2Uid,
-        instructor2Name,
-        studentUid,
-        studentName,
-        course
-      } = student
-      // get the class document
-      const classDoc = doc(db, 'classes', classId)
-      // get the student document
-      const studentDoc = doc(db, 'registrations', studentUid)
-      // get the instructor document
-      const instructorDoc = doc(db, 'applications', instructorUid)
-
-      // update the class document with the student and instructor
-      if (instructor2Uid && instructor2Uid !== '') {
-        updateDoc(classDoc, {
-          course,
-          students: {
-            [studentUid]: {
-              name: studentName
-            }
-          },
-          instructors: {
-            [instructorUid]: {
-              name: instructorName
-            },
-            [instructor2Uid]: {
-              name: instructor2Name
-            }
-          }
-        })
-      } else {
-        updateDoc(classDoc, {
-          course,
-          students: {
-            [studentUid]: {
-              name: studentName
-            }
-          },
-          instructors: {
-            [instructorUid]: {
-              name: instructorName
-            }
-          }
-        })
-      }
-
-      // update the student document with the classId
-      updateDoc(studentDoc, {
-        classId: classId
-      })
-
-      // update the instructor document with the classId
-      updateDoc(instructorDoc, {
-        classId: classId
-      })
-    }
+    const classesDoc = doc($db, 'classes', 'classes')
+    await setDoc(classesDoc, { classes })
   }
 
   async function onUpload(event) {
@@ -82,6 +21,7 @@
     const text = await file.text()
     const parsed = Papa.parse(text, { header: true })
     const classes = parsed.data
+    console.log(classes)
     storeClasses(classes)
   }
 
