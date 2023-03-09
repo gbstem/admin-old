@@ -9,6 +9,23 @@
   let data = {}
   let spreadsheet = []
 
+  const formatTime = time => {
+    if (
+      time ===
+      'saturday-2-30-4-30-pm-you-need-to-select-this-option-if-you-want-the-in-person-class'
+    ) {
+      return 'Saturday 2:30-4:30 PM'
+    }
+    let sentence = time.split('-').join(' ')
+    // replace P M with PM
+    sentence = sentence.replaceAll('p m', 'PM')
+    // capitalize first letter of each word
+    sentence = sentence.replace(/\b\w/g, l => l.toUpperCase())
+    // for any there are 2 numbers separated by a space, separate by dash instead
+    sentence = sentence.replace(/(\d{1,2}) (\d{1,2})/g, '$1-$2')
+    return sentence
+  }
+
   const getClasses = classes => {
     let data = {}
     const classIds = []
@@ -30,12 +47,16 @@
         } else {
           data[row.classId] = {
             course: row.Course,
-            instructorName: row.instructorName,
-            instructor2Name: row.instructor2Name,
+            instructorName: row.instructorName + ' (' + row.instructorEmail + ')',
+            instructor2Name:
+              row.instructor2Name !== ''
+                ? row.instructor2Name + '(' + row.instructor2Email + ')'
+                : '',
+            timeslot: row.Time,
             location:
               row.Loc === 'CPL Main Branch0' || row.Loc === 'CPL Main Branch'
                 ? 'CPL Main Branch'
-                : 'Virtual',
+                : row.meetingLink,
             students: [row.studentFirstName + ' ' + row.studentLastName]
           }
         }
@@ -78,6 +99,8 @@
         <div class="text-lg font-bold">{singleClass.course}</div>
         <div class="text-sm text-gray-500">Location</div>
         <div>{singleClass.location}</div>
+        <div class="text-sm text-gray-500">Time</div>
+        <div>{formatTime(singleClass.timeslot)}</div>
         <div class="text-sm text-gray-500">Instructor(s)</div>
         <ul class="list-disc list-inside">
           <li>{singleClass.instructorName}</li>
